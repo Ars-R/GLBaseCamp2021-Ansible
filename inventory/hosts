@@ -1,0 +1,14 @@
+
+[web0]
+pi164  ansible_host=192.168.0.164 ansible_user=root ansible_ssh_private_key_file=/home/ars/.ssh/id_rsa.pub
+
+[web1]
+pi181  ansible_host=192.168.0.181 ansible_user=root ansible_ssh_private_key_file=/home/ars/.ssh/id_rsa.pub
+
+[web2]
+pi112  ansible_host=192.168.0.112 ansible_user=root ansible_ssh_private_key_file=/home/ars/.ssh/id_rsa.pub
+
+
+[iaas:children]
+web0
+web1

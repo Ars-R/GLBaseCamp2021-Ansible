@@ -1,0 +1,44 @@
+---
+- name: create new users
+  hosts: web2
+  user: root
+  become: yes
+  
+  vars_prompt:
+    - name: login
+      prompt: enter login
+      private: no
+      
+    - name: my_password
+      prompt: enter password
+      private: no
+     # confirm: yes
+      unsafe: no
+      salt_size: 8
+      
+  tasks:
+     - name: check login
+       fail: msg="password contain login!"
+       when: login in ("[\w\-]{0,32}" + my_password + "[\w\-]{0,32}")
+    
+     - name: create user
+       user:
+         name: "{{ login }}"
+         state: present
+         password: "{{ my_password | string | password_hash('sha512', 'A512') }}"
+         shell: /bin/bash
+         
+
+- hosts: web2
+  user: root
+  become: yes
+  tasks:
+    - name: del
+      user: 
+        name: "{{ item }}"
+        state: absent
+        remove: yes
+      loop:
+        - aaa
+        - ooo
+...

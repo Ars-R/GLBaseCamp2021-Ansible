@@ -1,0 +1,26 @@
+---
+  
+- hosts: web2
+  become: yes
+  
+
+  vars:
+    ip1: 192.168.0.165
+    ip2: 192.168.0.140
+
+  tasks:
+    - name: write to hosts.deny
+      lineinfile:
+        path: /etc/hosts.deny
+        line: "ALL: {{ ip1 }}"
+        create: yes
+
+
+
+    - name: write to hosts.allow
+      lineinfile:
+        path: /etc/hosts.allow
+        line: "ALL: {{ ip2 }}"
+        create: yes
+
+  
